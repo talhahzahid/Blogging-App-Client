@@ -12,7 +12,9 @@ const Signup = () => {
     console.log(username.current.value);
     console.log(email.current.value);
     console.log(password.current.value);
-    const respone = await fetch("http://localhost:9000/user/signup", {});
+    const respone = await fetch("http://localhost:9000/user/signup", {
+      
+    });
     username.current.value = "";
     email.current.value = "";
     password.current.value = "";

@@ -5,8 +5,26 @@ const Dashboard = () => {
   const description = useRef();
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const title = title.current.value;
+    const description = description.current.value;
+    const respone = fetch("http://localhost:9000/api/v1/addblog", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title,
+        description,
+      }),
+    });
+    if (respone.ok) {
+      const data = await respone.json();
+      console.log("Blog added successfully");
+    } else {
+      console.log("error adding blog");
+    }
   };
 
   return (
