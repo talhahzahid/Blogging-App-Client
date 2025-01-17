@@ -5,6 +5,7 @@ const Signup = () => {
   const username = useRef();
   const email = useRef();
   const password = useRef();
+  // const imageUrl = useRef();
   const [loading, setLoading] = useState(false);
 
   const handleSignUp = async (event) => {
@@ -12,9 +13,28 @@ const Signup = () => {
     console.log(username.current.value);
     console.log(email.current.value);
     console.log(password.current.value);
-    const respone = await fetch("http://localhost:9000/user/signup", {
-      
-    });
+    // const formDate = newFo
+    try {
+      const formData = new FormData();
+      formData.append("fullname", username.current.value);
+      formData.append("email", email.current.value);
+      formData.append("password", password.current.value);
+      // formData.append("imageUrl", password.current.value);
+      const response = fetch("http://localhost:9000/user/signup", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("Register successfully", data);
+        // Optionally redirect or show a success message
+      } else {
+        console.log("Error occurred");
+      }
+    } catch (error) {
+      console.log(error);
+    }
     username.current.value = "";
     email.current.value = "";
     password.current.value = "";
