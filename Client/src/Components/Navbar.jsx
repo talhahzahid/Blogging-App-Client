@@ -48,6 +48,9 @@ const Navbar = () => {
             <li>
               <Link to="/dashboard">Dashboard</Link>
             </li>
+            <li>
+              <Link to="/signin">Signin</Link>
+            </li>
           </ul>
         </div>
         <div className="navbar-end">
