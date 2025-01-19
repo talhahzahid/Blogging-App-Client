@@ -1,7 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
-import Cookies from "js-cookie"; // Import js-cookie
-import { useNavigate } from "react-router-dom"; // For redirection
-
+import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import userAllBlogs from "../Components/userAllBlogs";
 const Dashboard = () => {
   const title = useRef();
   const description = useRef();
@@ -11,18 +10,19 @@ const Dashboard = () => {
     e.preventDefault();
     const titleValue = title.current.value;
     const descriptionValue = description.current.value;
-
     if (!titleValue || !descriptionValue) {
       console.log("Please provide both title and description.");
       return;
     }
-
+    const verifyToken = localStorage.getItem("accessToken");
+    if (!verifyToken)
+      return console.log("Login first to post blog", alert("login first"));
     setLoading(true);
-
     try {
       const response = await fetch("http://localhost:9000/api/v1/addblog", {
         method: "POST",
         headers: {
+          Authorization: `Bearer ${verifyToken}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -55,6 +55,8 @@ const Dashboard = () => {
           <h1 className="text-2xl font-semibold text-center text-gray-800">
             Dashboard
           </h1>
+
+
           <input
             type="text"
             placeholder="Enter title here"
