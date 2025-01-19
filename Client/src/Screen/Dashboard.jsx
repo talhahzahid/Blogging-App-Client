@@ -1,11 +1,8 @@
-import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import userAllBlogs from "../Components/userAllBlogs";
+import React, { useEffect, useRef, useState } from "react";
 const Dashboard = () => {
   const title = useRef();
   const description = useRef();
   const [loading, setLoading] = useState(false);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const titleValue = title.current.value;
@@ -56,7 +53,6 @@ const Dashboard = () => {
             Dashboard
           </h1>
 
-
           <input
             type="text"
             placeholder="Enter title here"
@@ -73,32 +69,10 @@ const Dashboard = () => {
             {loading ? (
               <span className="loading loading-spinner loading-lg"></span>
             ) : (
-              "Post"
+              "Publish"
             )}
           </button>
         </form>
-      </div>
-
-      <div className="flex justify-center flex-wrap px-4 mt-7 gap-6">
-        <div className="card bg-base-100 shadow-xl w-full max-w-md">
-          <div className="card-body">
-            <div className="avatar">
-              <div className="w-16 rounded-full">
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                  alt="User Avatar"
-                />
-              </div>
-            </div>
-            <h2 className="card-title text-xl font-semibold">Card Title</h2>
-            <p className="text-gray-600">
-              If a dog chews shoes, whose shoes does he choose?
-            </p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-secondary">Read More</button>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
