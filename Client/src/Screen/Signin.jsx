@@ -13,14 +13,23 @@ const Signin = () => {
     console.log(password.current.value);
     try {
       const response = await fetch("http://localhost:9000/user/signin", {
+        method: "POST",
         headers: {
           "content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({
           email: email.current.value,
           password: password.current.value,
         }),
       });
+      const data = await response.json();
+      if (response.ok) {
+        localStorage.setItem("accessToken", data.accessToken);
+        console.log("Login successfully", data);
+      } else {
+        console.log("error occurred on Login");
+      }
     } catch (error) {
       console.log(error);
       console.log("error occuured");

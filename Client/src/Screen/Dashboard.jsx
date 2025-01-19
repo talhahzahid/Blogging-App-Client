@@ -1,4 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import Cookies from "js-cookie"; // Import js-cookie
+import { useNavigate } from "react-router-dom"; // For redirection
 
 const Dashboard = () => {
   const title = useRef();
@@ -7,23 +9,39 @@ const Dashboard = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const title = title.current.value;
-    const description = description.current.value;
-    const respone = fetch("http://localhost:9000/api/v1/addblog", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title,
-        description,
-      }),
-    });
-    if (respone.ok) {
-      const data = await respone.json();
-      console.log("Blog added successfully");
-    } else {
-      console.log("error adding blog");
+    const titleValue = title.current.value;
+    const descriptionValue = description.current.value;
+
+    if (!titleValue || !descriptionValue) {
+      console.log("Please provide both title and description.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("http://localhost:9000/api/v1/addblog", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: titleValue,
+          description: descriptionValue,
+        }),
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Blog added successfully", data);
+      } else {
+        console.log("Error adding blog");
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -58,6 +76,7 @@ const Dashboard = () => {
           </button>
         </form>
       </div>
+
       <div className="flex justify-center flex-wrap px-4 mt-7 gap-6">
         <div className="card bg-base-100 shadow-xl w-full max-w-md">
           <div className="card-body">
