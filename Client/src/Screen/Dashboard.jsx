@@ -1,10 +1,44 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Userblog from "../Components/Userblog";
 const Dashboard = () => {
   const title = useRef();
   const description = useRef();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  // protected routes
+  useEffect(() => {
+    const verifyToken = localStorage.getItem("accessToken");
+    if (!verifyToken) {
+      navigate("/signin");
+      return;
+    }
+    const auth = async () => {
+      try {
+        const response = await fetch("http://localhost:9000/protected", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${verifyToken}`,
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+
+        if (response.ok) {
+          navigate("/dashboard");
+          console.log("Authorization person");
+        } else {
+          navigate("/signin");
+        }
+      } catch (error) {
+        console.error("Error verifying token:", error);
+        navigate("/signin");
+      }
+    };
+
+    auth();
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -77,6 +111,7 @@ const Dashboard = () => {
           </button>
         </form>
       </div>
+      <Userblog/>
     </div>
   );
 };

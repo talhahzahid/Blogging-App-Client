@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const username = useRef();
@@ -7,7 +7,7 @@ const Signup = () => {
   const password = useRef();
   const imageUrl = useRef();
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   const handleSignUp = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -28,6 +28,7 @@ const Signup = () => {
       const data = await response.json();
       if (response.ok) {
         console.log("Register successfully", data);
+        navigate("/signin");
       } else {
         console.log("Error occurred");
       }
@@ -37,7 +38,7 @@ const Signup = () => {
     username.current.value = "";
     email.current.value = "";
     password.current.value = "";
-    imageUrl.current.files[0]
+    imageUrl.current.files[0];
     setLoading(false);
   };
 

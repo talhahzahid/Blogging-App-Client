@@ -1,5 +1,12 @@
 import React from "react";
 
+
+// const handelUpdateProfile = async () =>{
+//   const response = fetch()
+// }
+
+
+
 const Profile = () => {
   return (
     <div className="container mx-auto p-4">
