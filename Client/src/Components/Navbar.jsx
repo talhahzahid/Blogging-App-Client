@@ -2,6 +2,20 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const handelLogout = async () => {
+    const response = await fetch("http://localhost:9000/user/logout", {
+      method: "GET",
+      headers: {
+        "content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    if (response.ok) {
+      console.log("Logout Successfully");
+    } else {
+      console.log("Error through logout api");
+    }
+  };
   return (
     <>
       <div className="navbar bg-[#f9fafb]">
@@ -34,7 +48,7 @@ const Navbar = () => {
                 <Link to="/dashboard">Dashboard</Link>
               </li>
               <li>
-                <Link>Logout</Link>
+                <Link onClick={handelLogout}>Logout</Link>
               </li>
             </ul>
           </div>

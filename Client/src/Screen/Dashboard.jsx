@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const title = useRef();
   const description = useRef();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const titleValue = title.current.value;
